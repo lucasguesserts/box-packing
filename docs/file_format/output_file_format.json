@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Schema of a solution of the Single Large Object Placement Problem",
+  "description": "Json Schema describing the output format of the Single Large Object Placement Problem (SLOPP).",
+  "type": "object",
+  "required": [
+    "type",
+    "version",
+    "large_object",
+    "small_items"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "type": {
+      "const": "output"
+    },
+    "version": {
+      "const": "0.1.0"
+    },
+    "large_object": {
+      "type": "object",
+      "required": [
+        "length",
+        "width",
+        "height"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "length": {
+          "$ref": "#/$defs/measurement"
+        },
+        "width": {
+          "$ref": "#/$defs/measurement"
+        },
+        "height": {
+          "$ref": "#/$defs/measurement"
+        }
+      }
+    },
+    "small_items": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "required": [
+          "length",
+          "width",
+          "height",
+          "x",
+          "y",
+          "z"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "length": {
+            "$ref": "#/$defs/measurement"
+          },
+          "width": {
+            "$ref": "#/$defs/measurement"
+          },
+          "height": {
+            "$ref": "#/$defs/measurement"
+          },
+          "x": {
+            "$ref": "#/$defs/position"
+          },
+          "y": {
+            "$ref": "#/$defs/position"
+          },
+          "z": {
+            "$ref": "#/$defs/position"
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "measurement": {
+      "type": "integer",
+      "exclusiveMinimum": 0
+    },
+    "position": {
+      "type": "number",
+      "minimum": 0
+    }
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Schema of instances of the Single Large Object Placement Problem",
+  "description": "Json Schema describing the input format of the Single Large Object Placement Problem (SLOPP).",
+  "version": "0.0.0",
+  "type": "object",
+  "required": [
+    "type",
+    "version",
+    "large_object",
+    "small_items"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "type": {
+      "const": "input"
+    },
+    "version": {
+      "const": "0.0.0"
+    },
+    "large_object": {
+      "type": "object",
+      "required": [
+        "length",
+        "width",
+        "height"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "length": {
+          "$ref": "#/$defs/measurement"
+        },
+        "width": {
+          "$ref": "#/$defs/measurement"
+        },
+        "height": {
+          "$ref": "#/$defs/measurement"
+        }
+      }
+    },
+    "small_items": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "required": [
+          "length",
+          "width",
+          "height",
+          "quantity"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "length": {
+            "$ref": "#/$defs/measurement"
+          },
+          "width": {
+            "$ref": "#/$defs/measurement"
+          },
+          "height": {
+            "$ref": "#/$defs/measurement"
+          },
+          "quantity": {
+            "$ref": "#/$defs/quantity"
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "measurement": {
+      "type": "integer",
+      "exclusiveMinimum": 0
+    },
+    "quantity": {
+      "type": "integer",
+      "exclusiveMinimum": 0
+    }
+  }
+}
