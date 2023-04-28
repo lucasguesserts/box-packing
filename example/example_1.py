@@ -1,3 +1,4 @@
+import json
 import os
 
 import pandas as pd
@@ -7,6 +8,11 @@ from box_packing import *
 OUTPUT_DIR = "results/"
 TABLE_FILE_NAME = "best_solution_exercise_1_detailed.csv"
 SUMMARY_FILE_NAME = "best_solution_exercise_1_summary.csv"
+OUTPUT_FILE_NAME = "best_solution_exercise_1.json"
+
+TABLE_FILE_PATH = os.path.join(OUTPUT_DIR, TABLE_FILE_NAME)
+SUMMARY_FILE_PATH = os.path.join(OUTPUT_DIR, SUMMARY_FILE_NAME)
+OUTPUT_FILE_PATH = os.path.join(OUTPUT_DIR, OUTPUT_FILE_NAME)
 
 
 def main():
@@ -59,7 +65,7 @@ def pallet_summary(pallet):
             "Pallet height": [pallet.dimension[2]],
         }
     )
-    df.to_csv(os.path.join(OUTPUT_DIR, SUMMARY_FILE_NAME), index=False)
+    df.to_csv(SUMMARY_FILE_PATH, index=False)
     return
 
 
@@ -76,7 +82,14 @@ def pallet_addition_list(pallet):
             "position z",
         ],
     )
-    df.to_csv(os.path.join(OUTPUT_DIR, TABLE_FILE_NAME), index=False)
+    df.to_csv(TABLE_FILE_PATH, index=False)
+    return
+
+
+def pallet_output(pallet):
+    output = pallet.make_output()
+    with open(OUTPUT_FILE_PATH, "w") as file:
+        json.dump(output, file, indent=2)
     return
 
 
@@ -91,6 +104,7 @@ def best_solution_summary(possible_solutions):
     box_list_summary(box_list)
     pallet_summary(pallet)
     pallet_addition_list(pallet)
+    pallet_output(pallet)
 
 
 if __name__ == "__main__":

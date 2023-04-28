@@ -1,4 +1,5 @@
 import itertools
+import json
 
 import numpy as np
 
@@ -95,6 +96,28 @@ class Pallet:
                         continue  # no rotation fits => go to next box
                     break  # a rotation was fit in the pallet => break the idx loop
         return
+
+    def make_output(self):
+        obj = dict()
+        obj["type"] = "output"
+        obj["version"] = "0.1.0"
+        obj["large_object"] = {
+            "length": int(self.dimension[0]),
+            "width": int(self.dimension[1]),
+            "height": int(self.dimension[2]),
+        }
+        obj["small_items"] = [
+            {
+                "length": int(box[1 + 0]),
+                "width": int(box[1 + 1]),
+                "height": int(box[1 + 2]),
+                "x": int(box[4 + 0]),
+                "y": int(box[4 + 1]),
+                "z": int(box[4 + 2]),
+            }
+            for box in self.added_boxes
+        ]
+        return obj
 
 
 class BoxList:
