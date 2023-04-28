@@ -1,6 +1,9 @@
-# vim
+# temporary files
 *.swp
 *.swo
+*foo*
+*goo*
+*hoo*
 
 # python
 *.egg-info*
